@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>메모장</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f5f5f0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 48px 16px;
+    }
+
+    .container { width: 100%; max-width: 600px; }
+
+    .header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1a1a1a;
+      letter-spacing: -0.3px;
+    }
+
+    .sync-badge {
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 8px;
+      border-radius: 20px;
+      background: #f0f0f0;
+      color: #999;
+      transition: all 0.2s;
+    }
+    .sync-badge.live  { background: #e8f5e9; color: #2e7d32; }
+    .sync-badge.error { background: #ffebee; color: #c62828; }
+
+    .input-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    textarea {
+      flex: 1;
+      padding: 12px 14px;
+      font-size: 14px;
+      font-family: inherit;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 10px;
+      resize: none;
+      height: 80px;
+      outline: none;
+      background: #fff;
+      color: #1a1a1a;
+      transition: border-color 0.15s;
+      line-height: 1.5;
+    }
+    textarea:focus       { border-color: #555; }
+    textarea::placeholder { color: #aaa; }
+
+    button.add-btn {
+      padding: 0 18px;
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s, opacity 0.15s;
+      align-self: flex-end;
+      height: 40px;
+    }
+    button.add-btn:hover    { background: #333; }
+    button.add-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .memo-list { display: flex; flex-direction: column; gap: 10px; }
+
+    .memo-item {
+      background: #fff;
+      border: 1.5px solid #ebebeb;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      animation: fadeIn 0.18s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .memo-text {
+      flex: 1;
+      font-size: 14px;
+      color: #222;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .memo-meta { font-size: 11px; color: #bbb; margin-top: 6px; }
+
+    button.del-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #ccc;
+      font-size: 18px;
+      line-height: 1;
+      padding: 2px 4px;
+      border-radius: 4px;
+      transition: color 0.15s, background 0.15s;
+      flex-shrink: 0;
+    }
+    button.del-btn:hover { color: #e05252; background: #fff0f0; }
+
+    .empty, .loading {
+      text-align: center;
+      color: #bbb;
+      font-size: 14px;
+      padding: 40px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>메모장</h1>
+      <span class="sync-badge" id="syncBadge">연결 중…</span>
+    </div>
+    <div class="input-row">
+      <textarea id="input" placeholder="메모를 입력하세요… (Ctrl+Enter로 추가)"></textarea>
+      <button class="add-btn" id="addBtn">추가</button>
+    </div>
+    <div class="memo-list" id="list">
+      <p class="loading">불러오는 중…</p>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
