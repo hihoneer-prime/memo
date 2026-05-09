@@ -16,6 +16,7 @@
   --danger: #ef4444;
   --danger-glow: rgba(239, 68, 68, 0.15);
   --font: 'Inter', -apple-system, 'Apple SD Gothic Neo', sans-serif;
+  --font-brand: 'Space Grotesk', -apple-system, sans-serif;
   --radius: 14px;
   --radius-sm: 8px;
 }
@@ -92,6 +93,11 @@ h1 {
   font-weight: 700;
   color: var(--text);
   letter-spacing: -0.4px;
+}
+
+.brand {
+  font-family: var(--font-brand);
+  letter-spacing: -0.5px;
 }
 
 .sync-badge {
@@ -411,10 +417,10 @@ h1 {
 }
 
 .login-title {
-  font-size: 26px;
+  font-size: 36px;
   font-weight: 700;
   color: var(--text);
-  letter-spacing: -0.5px;
+  letter-spacing: -1px;
   margin-bottom: 8px;
 }
 

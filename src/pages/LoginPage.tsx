@@ -19,7 +19,7 @@ export default function LoginPage() {
   return (
     <div className="login-page">
       <div className="login-card">
-        <h1 className="login-title">메모장</h1>
+        <h1 className="login-title brand">pinax</h1>
         <p className="login-subtitle">아이디어를 기록하고 공유하세요</p>
         <button className="google-btn" onClick={handleLogin}>
           Google로 계속하기
