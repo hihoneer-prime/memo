@@ -1,5 +1,5 @@
 import {
-  collection, addDoc, deleteDoc, doc,
+  collection, addDoc, deleteDoc, doc, updateDoc,
   onSnapshot, orderBy, query, serverTimestamp, where
 } from 'firebase/firestore';
 import { auth, db } from '../lib/firebase';
@@ -28,4 +28,8 @@ export async function addMemo(text: string) {
 
 export async function deleteMemo(id: string) {
   await deleteDoc(doc(db, 'memos', id));
+}
+
+export async function updateMemo(id: string, text: string) {
+  await updateDoc(doc(db, 'memos', id), { text, updatedAt: serverTimestamp() });
 }

@@ -1,6 +1,6 @@
 {
   "version": "3",
-  "summary": { "total": 5, "done": 2, "in_progress": 0, "pending": 3 },
+  "summary": { "total": 5, "done": 3, "in_progress": 0, "pending": 2 },
   "features": [
     {
       "id": "setup-react",
@@ -53,7 +53,7 @@
     {
       "id": "memo-edit",
       "title": "메모 인라인 수정 기능",
-      "status": "pending",
+      "status": "done",
       "priority": "high",
       "affected_packages": ["src/services", "src/components"],
       "tags": ["frontend", "feature"],
