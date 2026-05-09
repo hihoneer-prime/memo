@@ -10,8 +10,11 @@ export default function MemoInput() {
     if (!trimmed) return;
     setLoading(true);
     setText('');
-    await addMemo(trimmed);
-    setLoading(false);
+    try {
+      await addMemo(trimmed);
+    } finally {
+      setLoading(false);
+    }
   }
 
   function handleKeyDown(e: React.KeyboardEvent) {

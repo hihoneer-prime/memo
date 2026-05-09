@@ -1,0 +1,123 @@
+{
+  "version": "3",
+  "summary": { "total": 5, "done": 1, "in_progress": 0, "pending": 4 },
+  "features": [
+    {
+      "id": "setup-react",
+      "title": "React + TypeScript 마이그레이션 및 프로젝트 구조 분리",
+      "status": "done",
+      "priority": "critical",
+      "affected_packages": ["src"],
+      "tags": ["frontend", "refactor"],
+      "acceptance_criteria": [
+        "npm run build 성공",
+        "src/lib/firebase.ts 존재 (firebase.js 대체)",
+        "src/services/memoService.ts 존재 — addMemo, deleteMemo, subscribeToMemos 함수 export",
+        "src/hooks/useMemos.ts 존재",
+        "src/components/MemoCard.tsx, MemoInput.tsx, Header.tsx 존재",
+        "src/pages/HomePage.tsx 존재",
+        "src/App.tsx, src/main.tsx 존재",
+        "기존 기능(추가/삭제/실시간동기화) 동작 유지"
+      ],
+      "test_scenarios": [
+        "메모 추가 → 목록에 즉시 반영",
+        "메모 삭제 → 목록에서 즉시 제거",
+        "Firestore 실시간 동기화 배지 표시"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "auth-firebase",
+      "title": "Firebase Auth Google 로그인 및 계정 기반 메모 관리",
+      "status": "pending",
+      "priority": "high",
+      "affected_packages": ["src/services", "src/pages", "src/hooks"],
+      "tags": ["auth", "backend"],
+      "acceptance_criteria": [
+        "npm run build 성공",
+        "src/services/authService.ts 존재 — signInWithGoogle, signOut, onAuthStateChanged 래퍼 export",
+        "src/hooks/useAuth.ts 존재",
+        "src/pages/LoginPage.tsx 존재",
+        "src/lib/firebase.ts에 getAuth 초기화 추가",
+        "Firestore memos 컬렉션에 userId 필드 포함",
+        "로그인 사용자의 메모만 표시 (userId 필터링)"
+      ],
+      "test_scenarios": [
+        "미로그인 → LoginPage 렌더링",
+        "Google 로그인 버튼 클릭 → 팝업 인증",
+        "로그인 후 → HomePage 렌더링 + 본인 메모만 표시",
+        "로그아웃 → LoginPage로 이동"
+      ],
+      "depends_on": ["setup-react"]
+    },
+    {
+      "id": "memo-edit",
+      "title": "메모 인라인 수정 기능",
+      "status": "pending",
+      "priority": "high",
+      "affected_packages": ["src/services", "src/components"],
+      "tags": ["frontend", "feature"],
+      "acceptance_criteria": [
+        "npm run build 성공",
+        "src/services/memoService.ts에 updateMemo(id, text) 함수 추가",
+        "MemoCard 컴포넌트에 편집 모드 상태 존재",
+        "메모 클릭 시 텍스트가 textarea로 전환",
+        "Enter(또는 저장 버튼) → Firestore 업데이트",
+        "Escape → 편집 취소, 원본 복원"
+      ],
+      "test_scenarios": [
+        "메모 클릭 → 편집 모드 전환",
+        "텍스트 수정 후 저장 → Firestore 반영",
+        "Escape 키 → 원본으로 복원"
+      ],
+      "depends_on": ["setup-react"]
+    },
+    {
+      "id": "memo-share",
+      "title": "메모 공유 링크 생성 (공개/비공개 토글)",
+      "status": "pending",
+      "priority": "medium",
+      "affected_packages": ["src/services", "src/components", "src/pages"],
+      "tags": ["frontend", "feature", "backend"],
+      "acceptance_criteria": [
+        "npm run build 성공",
+        "src/services/memoService.ts에 toggleShare(id, isPublic) 함수 추가",
+        "Firestore memo 문서에 isPublic: boolean 필드",
+        "MemoCard에 공유 토글 버튼 존재",
+        "공유 ON → /share/:id 경로로 접근 가능한 공개 페이지",
+        "src/pages/SharedMemoPage.tsx 존재",
+        "공유 OFF 메모 → /share/:id 접근 시 '비공개 메모입니다' 표시"
+      ],
+      "test_scenarios": [
+        "공유 토글 ON → 공유 URL 클립보드 복사",
+        "/share/:id 접근 → 공개 메모 내용 표시 (비로그인도 가능)",
+        "공유 OFF 메모 URL 접근 → 비공개 안내"
+      ],
+      "depends_on": ["auth-firebase"]
+    },
+    {
+      "id": "ui-redesign",
+      "title": "트렌디한 UI 디자인 시스템 전면 적용",
+      "status": "pending",
+      "priority": "high",
+      "affected_packages": ["src/components", "src/pages"],
+      "tags": ["design", "frontend"],
+      "acceptance_criteria": [
+        "npm run build 성공",
+        "Inter 또는 Pretendard 웹폰트 적용",
+        "다크 배경 (#0f0f13) + 바이올렛 계열 액센트 (#7c3aed) 디자인 시스템",
+        "메모 카드 glassmorphism 또는 subtle elevation 적용",
+        "카드 등장 stagger 애니메이션 (CSS transition 또는 keyframe)",
+        "모바일 반응형 (375px 이상)",
+        "로그인 페이지 풀스크린 센터 레이아웃",
+        "빈 메모 상태(Empty State) 일러스트 또는 아이콘 표시"
+      ],
+      "test_scenarios": [
+        "모바일(375px) 레이아웃 깨짐 없음",
+        "메모 추가 시 stagger 애니메이션 동작",
+        "다크 배경에서 텍스트 가독성 확인"
+      ],
+      "depends_on": ["memo-edit", "memo-share"]
+    }
+  ]
+}
