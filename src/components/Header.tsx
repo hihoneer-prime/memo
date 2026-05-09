@@ -10,7 +10,7 @@ const labels: Record<SyncStatus, string> = {
 
 export default function Header({ status }: Props) {
   return (
-    <div className="header">
+    <div className="header-left">
       <h1>메모장</h1>
       <span className={`sync-badge ${status}`}>{labels[status]}</span>
     </div>

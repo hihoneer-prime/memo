@@ -11,22 +11,26 @@ export default function HomePage({ user }: Props) {
   const { memos, status } = useMemos(user.uid);
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f5f5f0', display: 'flex', justifyContent: 'center', padding: '48px 16px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
-      <div style={{ width: '100%', maxWidth: 600 }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <div className="app-container">
+      <div className="app-content">
+        <div className="header">
           <Header status={status} />
-          <button
-            onClick={() => signOut()}
-            style={{ padding: '6px 14px', background: 'transparent', border: '1px solid #ccc', borderRadius: 6, fontSize: 13, cursor: 'pointer', color: '#666' }}
-          >
+          <button className="logout-btn" onClick={() => signOut()}>
             로그아웃
           </button>
         </div>
         <MemoInput />
         <div className="memo-list">
           {memos.length === 0
-            ? <p className="empty">메모가 없습니다.</p>
-            : memos.map(m => <MemoCard key={m.id} memo={m} />)
+            ? (
+              <div className="empty-state">
+                <span className="icon">&#10022;</span>
+                <p>첫 번째 아이디어를 기록해보세요</p>
+              </div>
+            )
+            : memos.map((m, i) => (
+              <MemoCard key={m.id} memo={m} index={i} />
+            ))
           }
         </div>
       </div>

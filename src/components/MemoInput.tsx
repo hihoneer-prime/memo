@@ -22,16 +22,18 @@ export default function MemoInput() {
   }
 
   return (
-    <div className="input-row">
-      <textarea
-        value={text}
-        onChange={e => setText(e.target.value)}
-        onKeyDown={handleKeyDown}
-        placeholder="메모를 입력하세요… (Ctrl+Enter로 추가)"
-      />
-      <button className="add-btn" onClick={handleAdd} disabled={loading}>
-        추가
-      </button>
+    <div className="input-area">
+      <div className="input-row">
+        <textarea
+          value={text}
+          onChange={e => setText(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="메모를 입력하세요… (Ctrl+Enter로 추가)"
+        />
+        <button className="add-btn" onClick={handleAdd} disabled={loading}>
+          추가
+        </button>
+      </div>
     </div>
   );
 }

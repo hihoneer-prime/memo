@@ -2,7 +2,10 @@ import { useState } from 'react';
 import type { Memo } from '../types';
 import { deleteMemo, updateMemo, toggleShare } from '../services/memoService';
 
-interface Props { memo: Memo; }
+interface Props {
+  memo: Memo;
+  index: number;
+}
 
 function formatDate(ts: Memo['createdAt']): string {
   if (!ts) return '방금 전';
@@ -11,7 +14,7 @@ function formatDate(ts: Memo['createdAt']): string {
   return `${d.getFullYear()}.${pad(d.getMonth() + 1)}.${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
-export default function MemoCard({ memo }: Props) {
+export default function MemoCard({ memo, index }: Props) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(memo.text);
 
@@ -34,60 +37,56 @@ export default function MemoCard({ memo }: Props) {
 
   return (
     <div
-      className="memo-item"
+      className="memo-card"
       onClick={() => { if (!editing) setEditing(true); }}
-      style={{ cursor: editing ? 'default' : 'pointer' }}
+      style={{
+        cursor: editing ? 'default' : 'pointer',
+        animationDelay: `${index * 0.05}s`,
+      }}
     >
-      <div style={{ flex: 1 }}>
+      <div className="memo-card-body">
         {editing ? (
           <textarea
+            className="memo-edit-textarea"
             autoFocus
             value={draft}
             onChange={e => setDraft(e.target.value)}
             onKeyDown={handleKeyDown}
             onBlur={handleSave}
-            style={{ width: '100%', border: 'none', background: 'transparent', resize: 'none', outline: 'none', fontFamily: 'inherit', fontSize: 14, lineHeight: 1.6, color: '#222' }}
           />
         ) : (
           <div className="memo-text">{memo.text}</div>
         )}
         <div className="memo-meta">{formatDate(memo.createdAt)}</div>
       </div>
-      <button
-        className="share-btn"
-        onClick={async (e) => {
-          e.stopPropagation();
-          const nextPublic = !memo.isPublic;
-          try {
-            await toggleShare(memo.id, nextPublic);
-            if (nextPublic) {
-              const url = `${window.location.origin}/share/${memo.id}`;
-              await navigator.clipboard.writeText(url).catch(() => undefined);
+      <div className="card-actions">
+        <button
+          className={`share-btn ${memo.isPublic ? 'active' : 'inactive'}`}
+          onClick={async (e) => {
+            e.stopPropagation();
+            const nextPublic = !memo.isPublic;
+            try {
+              await toggleShare(memo.id, nextPublic);
+              if (nextPublic) {
+                const url = `${window.location.origin}/share/${memo.id}`;
+                await navigator.clipboard.writeText(url).catch(() => undefined);
+              }
+            } catch {
+              // toggleShare 실패는 Firestore 에러 — 무시하고 UI 상태 유지
             }
-          } catch {
-            // toggleShare 실패는 Firestore 에러 — 무시하고 UI 상태 유지
-          }
-        }}
-        title={memo.isPublic ? '공유 해제' : '공유'}
-        style={{
-          background: 'none',
-          border: 'none',
-          cursor: 'pointer',
-          fontSize: 16,
-          padding: '2px 6px',
-          opacity: memo.isPublic ? 1 : 0.4,
-          color: memo.isPublic ? '#2563eb' : '#888',
-        }}
-      >
-        🔗
-      </button>
-      <button
-        className="del-btn"
-        onClick={e => { e.stopPropagation(); deleteMemo(memo.id); }}
-        title="삭제"
-      >
-        ×
-      </button>
+          }}
+          title={memo.isPublic ? '공유 해제' : '공유'}
+        >
+          🔗
+        </button>
+        <button
+          className="del-btn"
+          onClick={e => { e.stopPropagation(); deleteMemo(memo.id); }}
+          title="삭제"
+        >
+          ×
+        </button>
+      </div>
     </div>
   );
 }

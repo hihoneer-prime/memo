@@ -13,7 +13,7 @@ export default function App() {
         <Route path="/share/:id" element={<SharedMemoPage />} />
         <Route path="*" element={
           user === undefined
-            ? <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span>로딩 중...</span></div>
+            ? <div className="loading-screen"><span>로딩 중...</span></div>
             : user ? <HomePage user={user} /> : <LoginPage />
         } />
       </Routes>
