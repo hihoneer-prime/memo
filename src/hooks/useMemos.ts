@@ -12,7 +12,7 @@ export function useMemos(userId: string) {
     const unsub = subscribeToMemos(
       userId,
       data => { setMemos(data); setStatus('live'); },
-      () => setStatus('error')
+      (e) => { console.error('[useMemos]', e); setStatus('error'); }
     );
     return unsub;
   }, [userId]);
