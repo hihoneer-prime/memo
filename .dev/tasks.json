@@ -1,6 +1,6 @@
 {
   "version": "3",
-  "summary": { "total": 5, "done": 3, "in_progress": 0, "pending": 2 },
+  "summary": { "total": 5, "done": 4, "in_progress": 0, "pending": 1 },
   "features": [
     {
       "id": "setup-react",
@@ -75,7 +75,7 @@
     {
       "id": "memo-share",
       "title": "메모 공유 링크 생성 (공개/비공개 토글)",
-      "status": "pending",
+      "status": "done",
       "priority": "medium",
       "affected_packages": ["src/services", "src/components", "src/pages"],
       "tags": ["frontend", "feature", "backend"],

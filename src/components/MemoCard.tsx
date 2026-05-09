@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Memo } from '../types';
-import { deleteMemo, updateMemo } from '../services/memoService';
+import { deleteMemo, updateMemo, toggleShare } from '../services/memoService';
 
 interface Props { memo: Memo; }
 
@@ -53,6 +53,34 @@ export default function MemoCard({ memo }: Props) {
         )}
         <div className="memo-meta">{formatDate(memo.createdAt)}</div>
       </div>
+      <button
+        className="share-btn"
+        onClick={async (e) => {
+          e.stopPropagation();
+          const nextPublic = !memo.isPublic;
+          try {
+            await toggleShare(memo.id, nextPublic);
+            if (nextPublic) {
+              const url = `${window.location.origin}/share/${memo.id}`;
+              await navigator.clipboard.writeText(url).catch(() => undefined);
+            }
+          } catch {
+            // toggleShare 실패는 Firestore 에러 — 무시하고 UI 상태 유지
+          }
+        }}
+        title={memo.isPublic ? '공유 해제' : '공유'}
+        style={{
+          background: 'none',
+          border: 'none',
+          cursor: 'pointer',
+          fontSize: 16,
+          padding: '2px 6px',
+          opacity: memo.isPublic ? 1 : 0.4,
+          color: memo.isPublic ? '#2563eb' : '#888',
+        }}
+      >
+        🔗
+      </button>
       <button
         className="del-btn"
         onClick={e => { e.stopPropagation(); deleteMemo(memo.id); }}
