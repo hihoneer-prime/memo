@@ -27,7 +27,7 @@ export default function MemoInput() {
         value={text}
         onChange={e => setText(e.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder="메모를 입력하세요... (Ctrl+Enter로 추가)"
+        placeholder="메모를 입력하세요… (Ctrl+Enter로 추가)"
       />
       <button className="add-btn" onClick={handleAdd} disabled={loading}>
         추가

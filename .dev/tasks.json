@@ -1,6 +1,6 @@
 {
   "version": "3",
-  "summary": { "total": 5, "done": 1, "in_progress": 0, "pending": 4 },
+  "summary": { "total": 5, "done": 2, "in_progress": 0, "pending": 3 },
   "features": [
     {
       "id": "setup-react",
@@ -29,7 +29,7 @@
     {
       "id": "auth-firebase",
       "title": "Firebase Auth Google 로그인 및 계정 기반 메모 관리",
-      "status": "pending",
+      "status": "done",
       "priority": "high",
       "affected_packages": ["src/services", "src/pages", "src/hooks"],
       "tags": ["auth", "backend"],
