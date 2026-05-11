@@ -11,7 +11,14 @@ export function useMemos(userId: string) {
   useEffect(() => {
     const unsub = subscribeToMemos(
       userId,
-      data => { setMemos(data); setStatus('live'); },
+      data => {
+        const sorted = [...data].sort((a, b) => {
+          if (!!a.isPinned === !!b.isPinned) return 0;
+          return a.isPinned ? -1 : 1;
+        });
+        setMemos(sorted);
+        setStatus('live');
+      },
       (e) => { console.error('[useMemos]', e); setStatus('error'); }
     );
     return unsub;

@@ -41,6 +41,11 @@ export async function toggleShare(id: string, isPublic: boolean) {
   await updateDoc(doc(db, 'memos', id), { isPublic });
 }
 
+export async function pinMemo(id: string, isPinned: boolean) {
+  if (!auth.currentUser) throw new Error('Not authenticated');
+  await updateDoc(doc(db, 'memos', id), { isPinned });
+}
+
 export async function getPublicMemo(id: string): Promise<Memo | null> {
   const snap = await getDoc(doc(db, 'memos', id));
   if (!snap.exists()) return null;

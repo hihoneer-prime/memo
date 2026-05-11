@@ -6,5 +6,6 @@ export interface Memo {
   createdAt: Timestamp | null;
   userId?: string;
   isPublic?: boolean;
+  isPinned?: boolean;
   updatedAt?: Timestamp | null;
 }

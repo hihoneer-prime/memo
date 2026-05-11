@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { Memo } from '../types';
-import { deleteMemo, updateMemo, toggleShare } from '../services/memoService';
+import { deleteMemo, updateMemo, toggleShare, pinMemo } from '../services/memoService';
 import { useToast } from '../hooks/useToast';
 
 interface Props {
@@ -46,7 +46,7 @@ export default function MemoCard({ memo, index }: Props) {
 
   return (
     <div
-      className="memo-card"
+      className={`memo-card${memo.isPinned ? ' pinned' : ''}`}
       onClick={() => {
         if (confirmDelete) { setConfirmDelete(false); return; }
         if (!editing) setEditing(true);
@@ -72,6 +72,18 @@ export default function MemoCard({ memo, index }: Props) {
         <div className="memo-meta">{formatDate(memo.createdAt)}</div>
       </div>
       <div className="card-actions">
+        <button
+          className={`pin-btn ${memo.isPinned ? 'active' : ''}`}
+          onClick={async (e) => {
+            e.stopPropagation();
+            const next = !memo.isPinned;
+            try {
+              await pinMemo(memo.id, next);
+              showToast(next ? '고정됨' : '고정 해제');
+            } catch { /* pinMemo 실패 무시 */ }
+          }}
+          title={memo.isPinned ? '고정 해제' : '고정'}
+        >📌</button>
         <button
           className={`share-btn ${memo.isPublic ? 'active' : 'inactive'}`}
           onClick={async (e) => {
