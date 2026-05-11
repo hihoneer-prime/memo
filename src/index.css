@@ -404,6 +404,39 @@ h1 {
   outline-offset: 2px;
 }
 
+.delete-confirm {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.confirm-yes {
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--font);
+  background: var(--danger);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.confirm-yes:hover { opacity: 0.85; }
+
+.confirm-no {
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 500;
+  font-family: var(--font);
+  background: var(--surface-hover);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
 /* ========================================
    Empty State
    ======================================== */

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { Memo } from '../types';
 import { deleteMemo, updateMemo, toggleShare } from '../services/memoService';
 import { useToast } from '../hooks/useToast';
@@ -19,6 +19,13 @@ export default function MemoCard({ memo, index }: Props) {
   const { showToast } = useToast();
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(memo.text);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+
+  useEffect(() => {
+    if (!confirmDelete) return;
+    const t = setTimeout(() => setConfirmDelete(false), 1500);
+    return () => clearTimeout(t);
+  }, [confirmDelete]);
 
   function handleSave() {
     const trimmed = draft.trim();
@@ -40,7 +47,10 @@ export default function MemoCard({ memo, index }: Props) {
   return (
     <div
       className="memo-card"
-      onClick={() => { if (!editing) setEditing(true); }}
+      onClick={() => {
+        if (confirmDelete) { setConfirmDelete(false); return; }
+        if (!editing) setEditing(true);
+      }}
       style={{
         cursor: editing ? 'default' : 'pointer',
         animationDelay: `${index * 0.05}s`,
@@ -84,13 +94,20 @@ export default function MemoCard({ memo, index }: Props) {
         >
           🔗
         </button>
-        <button
-          className="del-btn"
-          onClick={e => { e.stopPropagation(); deleteMemo(memo.id); }}
-          title="삭제"
-        >
-          ×
-        </button>
+        {confirmDelete ? (
+          <div className="delete-confirm" onClick={e => e.stopPropagation()}>
+            <button className="confirm-yes" onClick={() => deleteMemo(memo.id)}>삭제</button>
+            <button className="confirm-no" onClick={() => setConfirmDelete(false)}>취소</button>
+          </div>
+        ) : (
+          <button
+            className="del-btn"
+            onClick={e => { e.stopPropagation(); setConfirmDelete(true); }}
+            title="삭제"
+          >
+            ×
+          </button>
+        )}
       </div>
     </div>
   );
