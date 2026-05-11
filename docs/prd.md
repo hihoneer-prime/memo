@@ -1,44 +1,40 @@
-# PRD — 메모장 v2: 아이디어 메모 앱 리부트
+# PRD — pinax v2: 기능 확장 + UX 완성
 
 ## 개요
-- **목표**: Vanilla JS 단일 파일 메모장을 React + TypeScript 기반의 트렌디한 아이디어 관리 앱으로 전환
-- **범위**: 프로젝트 전체 재구성 (프론트엔드/서비스 레이어 분리, 인증, 수정, 공유)
+- 목표: 실사용성을 높이는 핵심 기능 추가 + 액션 피드백/안전장치로 UX 완성
+- 범위: src/components, src/pages, src/hooks, src/services, src/types, src/index.css
 
 ---
 
-## Phase 1 — 기반 전환
+## Phase 1 — 사용성 핵심 개선
 
-- [ ] setup-react: Vanilla JS → React + TypeScript + Vite 마이그레이션, 프론트엔드/서비스 레이어 디렉토리 구조 구성
-- [ ] auth-firebase: Firebase Auth Google 로그인, 계정 기반 메모 소유권
+- [ ] toast-feedback: 액션 피드백 토스트 알림 시스템
+- [ ] memo-search: 메모 실시간 검색/필터
+- [ ] delete-confirm: 삭제 확인 인라인 UX
 
-## Phase 2 — 핵심 기능
+## Phase 2 — 기능 확장 + 브랜딩
 
-- [ ] memo-edit: 메모 인라인 수정 기능 (기존 추가/삭제에 편집 추가)
-- [ ] memo-share: 메모 공유 링크 생성 (공개/비공개 토글 + 공유 URL)
-
-## Phase 3 — 디자인 완성
-
-- [ ] ui-redesign: 트렌디한 UI 디자인 시스템 — 감각적인 레이아웃, 애니메이션, 타이포그래피
+- [ ] memo-pin: 중요 메모 상단 고정
+- [ ] share-page-redesign: 공유 페이지 pinax 브랜딩 개선
 
 ---
 
 ## 의존성 순서
 
 ```
-setup-react → auth-firebase → memo-edit ┐
-                            → memo-share ┘ → ui-redesign
+toast-feedback     (독립)
+memo-search        (독립)
+delete-confirm     (독립)
+memo-pin           → toast-feedback 완료 후 (토스트 재사용)
+share-page-redesign (독립, design)
 ```
 
-## 목표 아키텍처
+---
 
-```
-src/
-  components/     ← 프론트엔드: 순수 UI
-  pages/          ← 프론트엔드: 페이지 단위
-  hooks/          ← 프론트엔드: React 상태 훅
-  services/       ← 백엔드 레이어: Firebase 호출 추상화
-  types/          ← 공유 타입 정의
-  lib/            ← Firebase 초기화
-  App.tsx
-  main.tsx
-```
+## v1 완료 이력
+
+- [x] setup-react: Vanilla JS → React + TypeScript 마이그레이션
+- [x] auth-firebase: Firebase Auth Google 로그인
+- [x] memo-edit: 메모 인라인 수정
+- [x] memo-share: 메모 공유 링크
+- [x] ui-redesign: 다크 글래스모피즘 디자인 시스템

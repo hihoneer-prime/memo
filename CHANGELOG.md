@@ -1,5 +1,31 @@
 # Changelog
 
+## 2026-05-11
+
+- 서비스명 pinax로 변경, Space Grotesk 브랜드 폰트 적용
+
+- 토스트 알림 시스템 (task: toast-feedback)
+  - 공유 ON → '링크 복사됨!', 공유 OFF → '공유 해제됨' 토스트
+  - 2.5초 자동 소멸, 슬라이드인 애니메이션
+
+- 메모 실시간 검색 (task: memo-search)
+  - 검색어 입력 시 즉시 클라이언트 사이드 필터링
+  - × 버튼으로 초기화, 결과 없을 때 안내 메시지
+
+- 삭제 확인 인라인 UX (task: delete-confirm)
+  - × 클릭 → 삭제/취소 버튼 인라인 표시
+  - 1.5초 경과 또는 카드 외부 클릭 시 자동 취소
+
+- 메모 고정 기능 (task: memo-pin)
+  - 📌 버튼으로 중요 메모 상단 고정
+  - 고정 카드 보라색 테두리 시각 구분
+  - '고정됨' / '고정 해제' 토스트 피드백
+
+- 공유 페이지 pinax 브랜딩 (task: share-page-redesign)
+  - 상단 pinax 로고 (Space Grotesk)
+  - 메모 작성 날짜 표시
+  - 'pinax로 아이디어 기록하기 →' CTA
+
 ## 2026-05-10
 
 - Google 로그인 및 계정별 메모 분리 (task: auth-firebase)

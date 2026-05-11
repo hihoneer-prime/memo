@@ -7,8 +7,13 @@ Firebase Firestore + React 기반의 실시간 동기화 아이디어 메모 웹
 - Google 계정 로그인 (Firebase Auth)
 - 메모 작성 / 수정 / 삭제 (계정별 분리)
 - 메모 공유 링크 생성 (공개/비공개 토글)
+- 메모 실시간 검색/필터
+- 중요 메모 상단 고정 (📌 핀)
+- 삭제 확인 인라인 UX (실수 방지)
+- 액션 피드백 토스트 알림
 - Firebase Firestore 실시간 동기화 (onSnapshot)
 - 다크 글래스모피즘 UI + 카드 스태거 애니메이션
+- Space Grotesk 브랜드 폰트 + pinax 브랜딩
 - Ctrl+Enter 단축키로 메모 추가
 - 모바일 반응형 (375px 이상)
 
