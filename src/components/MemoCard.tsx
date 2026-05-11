@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Memo } from '../types';
 import { deleteMemo, updateMemo, toggleShare } from '../services/memoService';
+import { useToast } from '../hooks/useToast';
 
 interface Props {
   memo: Memo;
@@ -15,6 +16,7 @@ function formatDate(ts: Memo['createdAt']): string {
 }
 
 export default function MemoCard({ memo, index }: Props) {
+  const { showToast } = useToast();
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(memo.text);
 
@@ -70,6 +72,9 @@ export default function MemoCard({ memo, index }: Props) {
               if (nextPublic) {
                 const url = `${window.location.origin}/share/${memo.id}`;
                 await navigator.clipboard.writeText(url).catch(() => undefined);
+                showToast('링크 복사됨!');
+              } else {
+                showToast('공유 해제됨');
               }
             } catch {
               // toggleShare 실패는 Firestore 에러 — 무시하고 UI 상태 유지
