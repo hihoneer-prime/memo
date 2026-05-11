@@ -603,6 +603,20 @@ h1 {
   letter-spacing: -0.3px;
 }
 
+.shared-brand {
+  margin-bottom: 40px;
+}
+
+.shared-logo {
+  font-size: 22px;
+  color: var(--text);
+  text-decoration: none;
+  opacity: 0.9;
+  transition: opacity 0.2s;
+}
+
+.shared-logo:hover { opacity: 1; }
+
 .shared-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -612,23 +626,41 @@ h1 {
   -webkit-backdrop-filter: blur(12px);
 }
 
-.shared-card p {
-  font-size: 14px;
-  line-height: 1.65;
+.shared-memo-text {
+  font-size: 15px;
+  line-height: 1.7;
   white-space: pre-wrap;
   word-break: break-word;
   color: var(--text);
 }
 
-.shared-not-found {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--bg);
+.shared-memo-date {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 14px;
+}
+
+.shared-cta {
+  margin-top: 48px;
+  text-align: center;
+}
+
+.shared-cta-link {
+  font-size: 13px;
+  color: var(--accent-light);
+  text-decoration: none;
+  opacity: 0.75;
+  transition: opacity 0.2s;
+}
+
+.shared-cta-link:hover { opacity: 1; }
+
+.shared-loading,
+.shared-not-found-msg {
   color: var(--text-muted);
   font-size: 14px;
-  font-family: var(--font);
+  padding: 40px 0;
+  text-align: center;
 }
 
 /* ========================================

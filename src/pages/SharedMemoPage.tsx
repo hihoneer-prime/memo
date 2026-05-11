@@ -1,7 +1,32 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState, type ReactNode } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { getPublicMemo } from '../services/memoService';
 import type { Memo } from '../types';
+
+function formatDate(ts: Memo['createdAt']): string {
+  if (!ts) return '';
+  const d = ts.toDate();
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}.${pad(d.getMonth() + 1)}.${pad(d.getDate())}`;
+}
+
+function SharedLayout({ children }: { children: ReactNode }) {
+  return (
+    <div className="shared-page">
+      <div className="shared-content">
+        <div className="shared-brand">
+          <Link to="/" className="shared-logo brand">pinax</Link>
+        </div>
+        {children}
+        <div className="shared-cta">
+          <Link to="/" className="shared-cta-link">
+            pinax로 아이디어 기록하기 →
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function SharedMemoPage() {
   const { id } = useParams<{ id: string }>();
@@ -13,25 +38,27 @@ export default function SharedMemoPage() {
   }, [id]);
 
   if (memo === undefined) return (
-    <div className="loading-screen">
-      <span>불러오는 중...</span>
-    </div>
+    <SharedLayout>
+      <div className="shared-loading">불러오는 중...</div>
+    </SharedLayout>
   );
 
   if (memo === null) return (
-    <div className="shared-not-found">
-      <p>비공개 메모이거나 존재하지 않습니다.</p>
-    </div>
+    <SharedLayout>
+      <div className="shared-not-found-msg">
+        비공개 메모이거나 존재하지 않습니다.
+      </div>
+    </SharedLayout>
   );
 
   return (
-    <div className="shared-page">
-      <div className="shared-content">
-        <h2 className="shared-heading">공유된 메모</h2>
-        <div className="shared-card">
-          <p>{memo.text}</p>
-        </div>
+    <SharedLayout>
+      <div className="shared-card">
+        <p className="shared-memo-text">{memo.text}</p>
+        {memo.createdAt && (
+          <p className="shared-memo-date">{formatDate(memo.createdAt)}</p>
+        )}
       </div>
-    </div>
+    </SharedLayout>
   );
 }
