@@ -15,6 +15,7 @@ Firebase Firestore + React 기반의 실시간 동기화 아이디어 메모 웹
 - 다크 글래스모피즘 UI + 카드 스태거 애니메이션
 - Space Grotesk 브랜드 폰트 + pinax 브랜딩
 - Ctrl+Enter 단축키로 메모 추가
+- 현재 위치 날씨 표시 (Open-Meteo API, 위치 권한 기반)
 - 모바일 반응형 (375px 이상)
 
 ## 기술 스택
@@ -38,6 +39,10 @@ src/
   hooks/
     useMemos.ts             — 메모 상태 커스텀 훅
     useAuth.ts              — 인증 상태 커스텀 훅
+  services/
+    weatherService.ts       — Open-Meteo API + WMO 코드 매핑
+  hooks/
+    useWeather.ts           — Geolocation + 날씨 상태 훅
   components/               — Header, MemoInput, MemoCard
   pages/
     HomePage.tsx            — 메인 페이지

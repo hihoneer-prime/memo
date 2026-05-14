@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-05-14
+
+- 날씨 연동 (Open-Meteo API)
+  - 브라우저 Geolocation으로 현재 위치 감지
+  - Open-Meteo API로 기온·날씨 코드 조회 (API 키 불필요)
+  - WMO weather_code → 이모지 + 한국어 레이블 매핑
+  - 헤더 sync-badge 옆에 `☀️ 23°` 형태로 표시
+  - 위치 권한 거부 / 실패 시 조용히 숨김
+
 ## 2026-05-11
 
 - 서비스명 pinax로 변경, Space Grotesk 브랜드 폰트 적용

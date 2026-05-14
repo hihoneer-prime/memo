@@ -1,4 +1,5 @@
 import type { SyncStatus } from '../hooks/useMemos';
+import { useWeather } from '../hooks/useWeather';
 
 interface Props { status: SyncStatus; }
 
@@ -9,10 +10,17 @@ const labels: Record<SyncStatus, string> = {
 };
 
 export default function Header({ status }: Props) {
+  const weather = useWeather();
+
   return (
     <div className="header-left">
       <h1 className="brand">pinax</h1>
       <span className={`sync-badge ${status}`}>{labels[status]}</span>
+      {weather.status === 'success' && (
+        <span className="weather-badge">
+          {weather.data.emoji} {weather.data.temp}&deg;
+        </span>
+      )}
     </div>
   );
 }
